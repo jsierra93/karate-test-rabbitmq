@@ -1,21 +1,18 @@
 spring:
   application:
-    name: spring-reactor-rabbitmq
+    name: api-event-message
   rabbitmq:
-    host: localhost
+    host: 127.0.0.1 #localhost
     port: 5672
-    addresses: localhost:5672
     username: dev1234
     password: dev1234
     virtual-host: /
     dynamic:  true
+    publisher-returns: true
+
 server:
   port: 9001
-
 queue-params:
-  exchange: webflux
-  routing: webflux_key
-  queue: demo_webflux
+  queue: event-message
   durable: false
   autodelete: true
-  version: trunk.20201123.1

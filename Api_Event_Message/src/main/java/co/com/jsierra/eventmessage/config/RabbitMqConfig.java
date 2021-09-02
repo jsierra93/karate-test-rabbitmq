@@ -1,23 +1,19 @@
 package co.com.jsierra.eventmessage.config;
 
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Delivery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.Connection;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.rabbitmq.*;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 @Configuration
 public class RabbitMqConfig {
@@ -33,46 +29,42 @@ public class RabbitMqConfig {
     @Value("${queue-params.autodelete}")
     public boolean autodelete;
 
-    @Autowired
-    Mono<Connection> connectionMono;
-    @Autowired
-    AmqpAdmin amqpAdmin;
 
-    @Bean()
-    Mono<Connection> connectionMono(RabbitProperties rabbitProperties) {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(rabbitProperties.getHost());
-        connectionFactory.setPort(rabbitProperties.getPort());
-        connectionFactory.setUsername(rabbitProperties.getUsername());
-        connectionFactory.setPassword(rabbitProperties.getPassword());
-        return Mono.fromCallable(() -> connectionFactory.newConnection("reactor-rabbit")).cache();
+    @Bean("connectionFactoryConfig")
+    public CachingConnectionFactory connectionFactory(
+            @Value("${spring.rabbitmq.host}") String host,
+            @Value("${spring.rabbitmq.port}") int port,
+            @Value("${spring.rabbitmq.username}") String username,
+            @Value("${spring.rabbitmq.password}") String password,
+            @Value("${spring.rabbitmq.virtual-host}") String virtualHost,
+            @Value("${spring.rabbitmq.publisher-returns}") Boolean publisherReturns) {
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.setHost(host);
+        connectionFactory.setPort(port);
+        connectionFactory.setUsername(username);
+        connectionFactory.setPassword(password);
+        connectionFactory.setVirtualHost(virtualHost);
+        connectionFactory.isSimplePublisherConfirms();
+        connectionFactory.setPublisherReturns(publisherReturns);
+        return connectionFactory;
+    }
+
+    @Bean("rabbitTemplateConfig")
+    public AmqpTemplate rabbitTemplate(@Qualifier("connectionFactoryConfig") ConnectionFactory connectionFactory) {
+        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        return rabbitTemplate;
     }
 
     @Bean
-    Sender sender(Mono<Connection> connectionMono) {
-        return RabbitFlux.createSender(new SenderOptions().connectionMono(connectionMono));
+    Queue queue() {
+        return new Queue(queueName, isDurableQueue, false, autodelete);
     }
+
 
     @Bean
-    Receiver receiver(Mono<Connection> connectionMono) {
-        return RabbitFlux.createReceiver(new ReceiverOptions().connectionMono(connectionMono));
+    public MessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
-
-    @Bean
-    Flux<Delivery> deliveryFlux(Receiver receiver) {
-        return receiver.consumeNoAck(queueName);
-    }
-
-    @PostConstruct
-    public void init() {
-        amqpAdmin.declareQueue(new Queue(queueName, isDurableQueue, false, autodelete));
-    }
-
-    @PreDestroy
-    public void close() throws Exception {
-        connectionMono.block().close();
-    }
-
-
 
 }
