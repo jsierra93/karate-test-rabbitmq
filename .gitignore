@@ -23,6 +23,8 @@
 hs_err_pid*
 
 .idea
+.gradle
 Api_Event_Message/.gradle
 Api_Event_Message/.idea
 Api_Event_Message/build
+!Api_Event_Message/build/libs/api-event-message-0.0.1-SNAPSHOT.jar

@@ -11,3 +11,15 @@ services:
       RABBITMQ_DEFAULT_USER: "dev1234"
       RABBITMQ_DEFAULT_PASS: "dev1234"
       RABBITMQ_DEFAULT_VHOST: "/"
+
+  api-event-message:
+    build:
+      context: Api_Event_Message
+      dockerfile: Dockerfile
+    ports:
+      - 9001:9001
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq-local
+      - SPRING_RABBITMQ_ADDRESSES=rabbitmq-local:5672
+    depends_on:
+      - rabbitmq-local
