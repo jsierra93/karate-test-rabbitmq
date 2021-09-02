@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-reactor-rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    addresses: localhost:5672
+    username: dev1234
+    password: dev1234
+    virtual-host: /
+    dynamic:  true
+server:
+  port: 9001
+
+queue-params:
+  exchange: webflux
+  routing: webflux_key
+  queue: demo_webflux
+  durable: false
+  autodelete: true
+  version: trunk.20201123.1
