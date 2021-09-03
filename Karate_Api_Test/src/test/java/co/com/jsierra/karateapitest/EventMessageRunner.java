@@ -2,7 +2,6 @@ package co.com.jsierra.karateapitest;
 
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
-import com.intuit.karate.junit5.Karate;
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import org.apache.commons.io.FileUtils;
@@ -18,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class EventMessageRunner {
 
     @Test
-    void sendMessageToQueueJunit5(){
+    void testParallel(){
         Results results = Runner.path("classpath:co/com/jsierra/karateapitest")
+                .outputCucumberJson(true)
                 .parallel(Thread.activeCount());
         generateReport(results.getReportDir());
         assertTrue(results.getFailCount() == 0, results.getErrorMessages());
-
     }
 
     public static void generateReport(String karateOutputPath) {

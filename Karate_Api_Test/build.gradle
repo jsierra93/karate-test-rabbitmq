@@ -10,12 +10,16 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     testImplementation 'com.intuit.karate:karate-junit5:1.1.0'
     testImplementation 'com.intuit.karate:karate-apache:0.9.6'
     testImplementation 'net.masterthought:cucumber-reporting:3.8.0'
     implementation 'com.rabbitmq:amqp-client:5.13.1'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 
 sourceSets {
@@ -37,4 +41,4 @@ test {
     outputs.upToDateWhen { false }
 }
 
-test.dependsOn cleanReports
+//test.dependsOn cleanReports
