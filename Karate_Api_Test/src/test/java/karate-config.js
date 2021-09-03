@@ -1,14 +1,14 @@
 function fn(){
 
 config =  {
-    urlQueue: 'localhost',
+    host: '127.0.0.1',
     port: 5672,
-    nameQueue: 'queue-demo',
+    queueName: 'event-message',
     username: 'dev1234',
     password: 'dev1234'
 }
 
-karate.log('get variable from karate-config ', config)
+karate.log('get variable from karate-config => ', config)
 
 return config;
 }

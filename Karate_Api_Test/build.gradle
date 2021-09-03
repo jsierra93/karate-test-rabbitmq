@@ -27,7 +27,14 @@ sourceSets {
     }
 }
 
+task cleanReports(type: Delete) {
+    delete './target'
+    followSymlinks = true
+}
 
 test {
     useJUnitPlatform()
+    outputs.upToDateWhen { false }
 }
+
+test.dependsOn cleanReports
