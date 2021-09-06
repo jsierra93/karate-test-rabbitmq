@@ -41,4 +41,4 @@ test {
     outputs.upToDateWhen { false }
 }
 
-test.dependsOn cleanReports
+clean.dependsOn cleanReports

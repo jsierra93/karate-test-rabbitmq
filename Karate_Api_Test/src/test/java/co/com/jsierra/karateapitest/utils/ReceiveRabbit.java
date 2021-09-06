@@ -31,11 +31,23 @@ public class ReceiveRabbit {
 
     }
 
-    public String readMessage(String queueName) throws IOException, TimeoutException {
+    public static Event receive(Map<String, Object> config) throws IOException, TimeoutException {
+        LOGGER.info(config.toString());
+        String host = (String) config.get("host");
+        int port = (int) config.get("port");
+        String username = (String) config.get("username");
+        String password = (String) config.get("password");
+        String queueName = (String) config.get("queueName");
+
+        FACTORY.setHost(host);
+        FACTORY.setPort(port);
+        FACTORY.setUsername(username);
+        FACTORY.setPassword(password);
+
         Connection connection = FACTORY.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.queueDeclare(queueName, false, false, false, null);
+        channel.queueDeclare(queueName, false, false, true, null);
         GetResponse message = channel.basicGet(queueName, true);
         ObjectMapper mapper = new ObjectMapper();
         Event event = mapper.readValue(message.getBody(), Event.class);
@@ -43,6 +55,30 @@ public class ReceiveRabbit {
 
         channel.close();
         connection.close();
-        return event.toString();
+        return event;
+    }
+
+    public static int count(Map<String, Object> config) throws IOException, TimeoutException {
+        LOGGER.info(config.toString());
+        String host = (String) config.get("host");
+        int port = (int) config.get("port");
+        String username = (String) config.get("username");
+        String password = (String) config.get("password");
+        String queueName = (String) config.get("queueName");
+
+        FACTORY.setHost(host);
+        FACTORY.setPort(port);
+        FACTORY.setUsername(username);
+        FACTORY.setPassword(password);
+
+        Connection connection = FACTORY.newConnection();
+        Channel channel = connection.createChannel();
+        int numMessage = (int) channel.messageCount(queueName);
+
+        LOGGER.info("Numero Mensajes : {}", numMessage);
+
+        channel.close();
+        connection.close();
+        return numMessage;
     }
 }

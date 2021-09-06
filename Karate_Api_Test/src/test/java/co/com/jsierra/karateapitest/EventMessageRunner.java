@@ -2,6 +2,7 @@ package co.com.jsierra.karateapitest;
 
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
+import com.intuit.karate.junit5.Karate;
 import net.masterthought.cucumber.Configuration;
 import net.masterthought.cucumber.ReportBuilder;
 import org.apache.commons.io.FileUtils;
@@ -15,6 +16,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EventMessageRunner {
+
+
+    @Karate.Test
+    Karate runTest(){
+        return Karate.run("classpath:co/com/jsierra/karateapitest");
+    }
 
     @Test
     void testParallel(){

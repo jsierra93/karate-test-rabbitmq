@@ -39,7 +39,7 @@ public class RabbitService {
             LOGGER.info("Leyendo mensaje : {}", message);
             response = Mono.just(message);
         } catch (Exception ex) {
-            LOGGER.info("No hay mensajes en la cola,{} ", ex);
+            LOGGER.info("No hay mensajes en la cola,{} ");
             response = Mono.empty();
         }
         return response;
