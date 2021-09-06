@@ -6,10 +6,10 @@ Feature: Send messages to RabbitMQ queue from API Rest
 
   Scenario: Send request POST to the API Rest to write message in the queue
     * def event = {"application":"demo","type":"success","severity":"low","message":"test send message from karate"}
-    * def receiveRabbit = Java.type('co.com.jsierra.karateapitest.utils.ReceiveRabbit')
+    * def utilsRabbit = Java.type('co.com.jsierra.karateapitest.utils.UtilsRabbit')
     Given request event
     And path '/queue'
     When method post
     Then status 200
-    * def msg = receiveRabbit.receive(config)
+    * def msg = utilsRabbit.receive(config)
     And match response == karate.toJson(msg)
