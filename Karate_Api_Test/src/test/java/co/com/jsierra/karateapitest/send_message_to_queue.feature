@@ -5,7 +5,7 @@ Feature: Send messages to RabbitMQ queue from API Rest
     * url 'http://localhost:9001/v1/api'
 
   Scenario: Send request POST to the API Rest to write message in the queue
-    * def event = {"application":"demo","type":"success","severity":"low","message":"test send message from api"}
+    * def event = {"application":"demo","type":"success","severity":"low","message":"test send message from karate"}
     * def receiveRabbit = Java.type('co.com.jsierra.karateapitest.utils.ReceiveRabbit')
     Given request event
     And path '/queue'

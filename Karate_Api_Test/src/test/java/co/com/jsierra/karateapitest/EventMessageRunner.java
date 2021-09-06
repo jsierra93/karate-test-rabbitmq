@@ -17,17 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EventMessageRunner {
 
-
-    @Karate.Test
-    Karate runTest(){
-        return Karate.run("classpath:co/com/jsierra/karateapitest");
-    }
-
     @Test
     void testParallel(){
         Results results = Runner.path("classpath:co/com/jsierra/karateapitest")
                 .outputCucumberJson(true)
-                .parallel(Thread.activeCount());
+                .parallel(1);
         generateReport(results.getReportDir());
         assertTrue(results.getFailCount() == 0, results.getErrorMessages());
     }

@@ -17,20 +17,6 @@ public class ReceiveRabbit {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendRabbit.class);
     private static ConnectionFactory FACTORY = new ConnectionFactory();
 
-    public ReceiveRabbit(Map<String, Object> config) {
-        LOGGER.info(config.toString());
-        String host = (String) config.get("host");
-        int port = (int) config.get("port");
-        String username = (String) config.get("username");
-        String password = (String) config.get("password");
-
-        FACTORY.setHost(host);
-        FACTORY.setPort(port);
-        FACTORY.setUsername(username);
-        FACTORY.setPassword(password);
-
-    }
-
     public static Event receive(Map<String, Object> config) throws IOException, TimeoutException {
         LOGGER.info(config.toString());
         String host = (String) config.get("host");

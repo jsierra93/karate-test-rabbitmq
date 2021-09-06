@@ -13,31 +13,30 @@ import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 public class SendRabbit {
-    private static final Logger logger = LoggerFactory.getLogger(SendRabbit.class);
-    private static ConnectionFactory factory = new ConnectionFactory();
+    private static final Logger LOGGER = LoggerFactory.getLogger(SendRabbit.class);
+    private static ConnectionFactory FACTORY = new ConnectionFactory();
 
-    public SendRabbit(Map<String, Object> config) {
-        logger.info(config.toString());
+    public static String send(Map<String, Object> config, Event message) throws IOException, TimeoutException {
+
+        LOGGER.info(config.toString());
         String host = (String) config.get("host");
         int port = (int) config.get("port");
         String username = (String) config.get("username");
         String password = (String) config.get("password");
+        String queueName = (String) config.get("queueName");
 
-        factory.setHost(host);
-        factory.setPort(port);
-        factory.setUsername(username);
-        factory.setPassword(password);
-    }
+        FACTORY.setHost(host);
+        FACTORY.setPort(port);
+        FACTORY.setUsername(username);
+        FACTORY.setPassword(password);
 
-
-    public String send(String queueName, Event message) throws IOException, TimeoutException {
-        Connection connection = factory.newConnection();
+        Connection connection = FACTORY.newConnection();
         Channel channel = connection.createChannel();
 
         byte[] data = new ObjectMapper().writeValueAsBytes(message);
         channel.queueDeclare(queueName, false, false, true, null);
         channel.basicPublish("", queueName, null, data);
-        logger.info("Enviando mensaje: {}", message);
+        LOGGER.info("Enviando mensaje: {}", message);
 
         channel.close();
         connection.close();
