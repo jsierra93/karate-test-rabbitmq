@@ -28,3 +28,9 @@ Api_Event_Message/.gradle
 Api_Event_Message/.idea
 Api_Event_Message/build
 !Api_Event_Message/build/libs/api-event-message-0.0.1-SNAPSHOT.jar
+
+
+Karate_Api_Test/.gradle
+Karate_Api_Test/.idea
+Karate_Api_Test/build
+Karate_Api_Test/target

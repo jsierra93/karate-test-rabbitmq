@@ -1,4 +1,4 @@
-function fn(){
+function init(){
 
 config =  {
     host: '127.0.0.1',
