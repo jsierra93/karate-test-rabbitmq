@@ -29,7 +29,7 @@ Para correr los dos proyectos se requieren las siguientes herramientas
 
 6. Ejecutar el comando `docker-compose build && docker-compose up` , en caso de ser exitoso se visualizará asi:
     
-<img src="/Users/joasierr/Karate_Framework/karate-test-rabbitmq/img.png" width=600 height=400 title="status up"/>
+<img src="https://github.com/jsierra93/karate-test-rabbitmq/blob/master/img.png" width=600 height=400 title="status up"/>
 
 9. Para realizar pruebas sobre el servicio, importamos el archivo **api-event-message.postman_collection.json**
 en postman y ejecutamos la petición Queue-Actuator el cual debe respondernos "UP".
