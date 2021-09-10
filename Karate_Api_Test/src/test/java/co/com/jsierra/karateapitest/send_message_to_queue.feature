@@ -12,4 +12,4 @@ Feature: Send messages to RabbitMQ queue from API Rest
     When method post
     Then status 200
     * def msg = utilsRabbit.receive(config)
-    And match response == karate.toJson(msg)
+    And match event == karate.toJson(msg)

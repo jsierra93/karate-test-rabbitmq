@@ -3,17 +3,12 @@ package co.com.jsierra.karateapitest.utils;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 public class ConectionRabbit {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConectionRabbit.class);
-
     public static Connection connectionRabbit(Map<String, Object> config) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         String host = (String) config.get("host");
@@ -25,6 +20,7 @@ public class ConectionRabbit {
         factory.setPort(port);
         factory.setUsername(username);
         factory.setPassword(password);
+        factory.setConnectionTimeout(5000);
 
         return factory.newConnection();
     }
