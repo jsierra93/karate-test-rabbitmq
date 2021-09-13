@@ -40,13 +40,15 @@ En el directorio **Karate_Api_Test** se encuentra el proyecto con los acceptance
 ejecutar de la siguiente forma:
 
 1. Importamos el proyecto  **Karate_Api_Test**.
-2. Ejecutamos los test por medio de la clase **EventMessageRunner**, el cual se encargará de ejectuar los escenarios 
+2. Ejecutamos los test por medio de la clase **EventMessageRunner**, el cual se encargará de ejecutar los escenarios 
 diseñados en cada ***.feature**
    `Karate_Api_Test/src/test/java/co/com/jsierra/karateapitest/EventMessageRunner.java`
 3. También podemos ejecutar los test por medio de la terminal:
+
    `./gradlew clean build` (Mac / linux)
 
    `gradlew clean build` (windows)
 4. En la carpeta target podemos visualizar los reportes de la ejecución ya sea exitosa o fallida.
+
    <img src="https://github.com/jsierra93/karate-test-rabbitmq/blob/master/img.png" title="cucumber report"/>
 
