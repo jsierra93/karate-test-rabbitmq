@@ -36,10 +36,12 @@ en postman y ejecutamos la petición Queue-Actuator el cual debe respondernos `{
 
 
 ## Ejecutar test con Karate Framework
-En el directorio **Karate_Api_Test** se encuentra el proyecto con los acceptance test del Api Rest los cuales podemos 
+En el directorio **Karate_Api_Test** se encuentra el proyecto con las pruebas de aceptación del Api Rest los cuales podemos 
 ejecutar de la siguiente forma:
 
 1. Importamos el proyecto  **Karate_Api_Test** desde nuestro IDE Preferido.
+
+   Nota: Se utiliza [Java Client for RabbitMQ](https://www.rabbitmq.com/api-guide.html) como dependencia Gradle `com.rabbitmq:amqp-client:5.13.1`
 2. Ejecutamos los test por medio de la clase **EventMessageRunner**, el cual se encargará de ejecutar los escenarios 
 diseñados en cada ***.feature**
    `Karate_Api_Test/src/test/java/co/com/jsierra/karateapitest/EventMessageRunner.java`
