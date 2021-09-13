@@ -29,9 +29,18 @@ Para correr los dos proyectos se requieren las siguientes herramientas
 
 6. Ejecutar el comando `docker-compose build && docker-compose up` , en caso de ser exitoso se visualizará asi:
     
-<img src="https://github.com/jsierra93/karate-test-rabbitmq/blob/master/img.png" title="status up"/>
+<img src="https://github.com/jsierra93/karate-test-rabbitmq/blob/master/img_1.png" title="status up"/>
 
 9. Para realizar pruebas sobre el servicio, importamos el archivo **api-event-message.postman_collection.json**
-en postman y ejecutamos la petición Queue-Actuator el cual debe respondernos "UP".
+en postman y ejecutamos la petición Queue-Actuator el cual debe respondernos `{"status": "UP"}`.
 
-10. ------------------ En construcción ----------
+
+## Ejecutar test con Karate Framework
+En el directorio **Karate_Api_Test** se encuentra el proyecto con los acceptance test del Api Rest los cuales podemos 
+ejecutar de la siguiente forma:
+
+1. Importamos el proyecto  **Karate_Api_Test**.
+2. Ejecutamos los test por medio de la clase **EventMessageRunner**, el cual se encargará de ejectuar los escenarios 
+diseñados en cada ***.feature**
+   `Karate_Api_Test/src/test/java/co/com/jsierra/karateapitest/EventMessageRunner.java`
+3. 
