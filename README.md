@@ -1,7 +1,7 @@
 # API Rest Spring (Dev) - RabbitMQ (broker) - Karate (Test) 
 
 En este repositorio se tiene un API Rest construida en [Spring](https://spring.io/) el cuál permite insertar, leer y eliminar mensajes en una 
-cola [RabbitMQ](https://www.rabbitmq.com/), por otro lado se tiene las pruebas de aceptación construida en [Karate Framework](https://github.com/intuit/karate) mediante el cual insertamos
+cola [RabbitMQ](https://www.rabbitmq.com/), por otro lado se tiene las pruebas de aceptación construidas en [Karate Framework](https://github.com/intuit/karate) mediante el cual insertamos
 mensajes en la cola y leemos mensajes para validar el correcto funcionamiento del API.
 
 ## Requisitos previos
@@ -39,7 +39,7 @@ en postman y ejecutamos la petición Queue-Actuator el cual debe respondernos `{
 En el directorio **Karate_Api_Test** se encuentra el proyecto con los acceptance test del Api Rest los cuales podemos 
 ejecutar de la siguiente forma:
 
-1. Importamos el proyecto  **Karate_Api_Test**.
+1. Importamos el proyecto  **Karate_Api_Test** desde nuestro IDE Preferido.
 2. Ejecutamos los test por medio de la clase **EventMessageRunner**, el cual se encargará de ejecutar los escenarios 
 diseñados en cada ***.feature**
    `Karate_Api_Test/src/test/java/co/com/jsierra/karateapitest/EventMessageRunner.java`
